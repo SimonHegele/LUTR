@@ -91,6 +91,7 @@ class LUTRArgparser(ArgumentParser):
                           default="all",
                           metavar="")
         grp1.add_argument("-mupl", "--max_utr_piece_len",
+                          metavar="",
                           help="Limits the length of UTR-pieces allowed in UTR-variants # TODO")
         grp2.add_argument("-r","--remove_unsupported",
                           action="store_true",
