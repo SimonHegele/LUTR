@@ -36,40 +36,64 @@ Additional dependencies required to use the assembly pipeline:
 ## 2 Usage
 
 ```
-usage: LUTR [-h] [-mf] [-mb] [-s] [-r] [-t] [-v] [-l] [-nl] prediction assembly outdir
+usage: LUTR [-h] [-mf] [-mb] [-nm] [-ma] [-s] [-mupl] [-r] [-t] [-v] [-l] prediction assembly outdir
 
-                    ----------------------------------------------------------------
-                    UTR-extensions for transcripts in functional annotations from
-                    orthology-based gene prediction tools using matching transcripts
-                    in structural annotations from reference-based transcriptome
-                    assembly.
-                    ----------------------------------------------------------------
+                    ----------------------------------------------------------------------------------------------------
+                      ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   █░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                      ██░   ██░   ██░   ██░   ██░                                          ██░   ██░   ██░   ██░   ██░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░   █░      █░     █░███████░  ██░       █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                    █░   ██░   ██░   ██░   ██░   █░  |█░    █|█░   █░   |█░   |█░ █░     █░   ██░   ██░   ██░   ██░   █░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░   |█░     |█░   █░   |█░   |█░  █░     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                      ██░   ██░   ██░   ██░   ██░    |█░     |█░   █░   |█░   |█░ █░       ██░   ██░   ██░   ██░   ██░
+                      ██░   ██░   ██░   ██░   ██░    |█░     |█░   █░   |█░   |█░█░        ██░   ██░   ██░   ██░   ██░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░   |█░     |█░   █░   |█░   |█░ █░      █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                    █░   ██░   ██░   ██░   ██░   █░  |█░   █░|█░   █░   |█░   |█░  █░█░  █░   ██░   ██░   ██░   ██░   █░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░   █ ████░   ████░    |█░  |█░    █░    █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                      ██░   ██░   ██░   ██░   ██░                                          ██░   ██░   ██░   ██░   ██░
+                     █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░ █░
+                      ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   ██░   █░
+                    ----------------------------------------------------------------------------------------------------
+
+                    UTR-extensions for transcripts in functional annotations from orthology-based gene prediction tools
+                    using matching transcripts in structural annotations from reference-based transcriptome assembly.
+
+                    Additional parameter explanation:
+                    *1 By default, LUTR only allows transcript matches in which all other exons between the first and
+                       last matched exon must also be matched exactly. This is based on the assumption that UTRs can
+                       affect splicing within the coding regions of a transcript, e.g. by changing its secondary
+                       structure.
+                    *2 By default, LUTR assignes assembled transcripts only to the matching predicted transcripts they
+                       share the most bases with. Assigning them to all matching predicted transcripts can increase the
+                       number of annotated UTRs but bears the risk of an increased rate of false positives.
+                    ----------------------------------------------------------------------------------------------------
 
 
 positional arguments:
-  prediction            Annotation from gene prediction (GFF)
-  assembly              Annotation from transcriptome assembly (GFF)
-  outdir                Output directory (Must not exist already)
+  prediction                    Annotation from gene prediction (GFF)
+  assembly                      Annotation from transcriptome assembly (GFF)
+  outdir                        Output directory (Must not exist already)
 
 options:
-  -h, --help            show this help message and exit
+  -h, --help                    show this help message and exit
 
 Transcript matching:
-  -mf , --mftm          Minimum fraction of the predicted transcript to be matched [default: 0.9]
-  -mb , --mtbm          Minimum bases of the predicted transcript to be matched [default: 10,000]
+  -mf , --mftm                  Minimum fraction of the predicted transcript to be matched [default: 0.9]
+  -mb , --mtbm                  Minimum bases of the predicted transcript to be matched [default: 10,000]
+  -nm, --no_match_middle        Allows missing / additional middle exons in the transcrpt matching *1
+  -ma, --match_all              Assign assembled transcripts to all matching predicted transcripts *2
+  -mupl , --max_utr_piece_len   Limits the length of UTR-pieces allowed in UTR-variants # TODO
 
 Transcript selection:
-  -s , --select         How to select from multiple UTR-variants [choices: shortest, longest, all] [default: all]
-  -r, --remove_unsupported
-                        Remove unmatched transcripts
+  -s , --select                 How to select from multiple UTR-variants [choices: shortest, longest, all] [default: all]
+  -r, --remove_unsupported      Remove unmatched transcripts
 
 Performance:
-  -t , --threads        Number of parallel processes to use [Default:8]
+  -t , --threads                Number of parallel processes to use [Default:8]
 
 Others:
-  -v , --verbosity      Report progress every 10^v genes [default: 0]
-  -l , --log_level      [default: info]
-  -nl, --no_linux       Use if you are not running under linux and the cat command is not available
+  -v , --verbosity              Report progress every 10^v genes [default: 0]
+  -l , --log_level              [default: info]
 ```
 
 ### 2.1 Input
