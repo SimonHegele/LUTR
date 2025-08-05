@@ -96,9 +96,10 @@ def main():
     lutr_gff = sorted(lutr_gff, key=key)
     lutr_gff = concat(lutr_gff)
     
-    write_gff(lutr_gff, path.join(args.outdir, lutr.gff))
+    write_gff(lutr_gff, path.join(args.outdir, "lutr.gff"))
     
     info("############################################")
     info("#    Simon says: Thanks for using LUTR!    #")
 
     info("############################################")
+
