@@ -1,0 +1,9 @@
+# No match for the predicted transcript
+# It has an additional exon (exon_4)
+Chr1	Test	exon	2000	3000	.	.	.	ID=at_3-exon_1;Parent=at_3
+Chr1	Test	exon	3000	4000	.	.	.	ID=at_3-exon_2;Parent=at_3
+Chr1	Test	exon	5000	6000	.	.	.	ID=at_3-exon_3;Parent=at_3
+Chr1	Test	exon	6300	6700	.	.	.	ID=at_3-exon_4;Parent=at_3
+Chr1	Test	exon	7000	8000	.	.	.	ID=at_3-exon_5;Parent=at_3
+Chr1	Test	exon	9000	10500	.	.	.	ID=at_3-exon_6;Parent=at_3
+Chr1	Test	exon	11000	10000	.	.	.	ID=at_3-exon_7;Parent=at_3

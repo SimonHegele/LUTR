@@ -1,0 +1,5 @@
+Chr1	Test	exon	4200	4800	.	.	.	ID=at_5-exon_1;Parent=at_7
+Chr1	Test	exon	5000	6000	.	.	.	ID=at_7-exon_2;Parent=at_7
+Chr1	Test	exon	7000	8000	.	.	.	ID=at_7-exon_3;Parent=at_7
+Chr1	Test	exon	9000	10000	.	.	.	ID=at_7-exon_4;Parent=at_7
+Chr1	Test	exon	11000	120000	.	.	.	ID=at_7-exon_5;Parent=at_7

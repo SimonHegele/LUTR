@@ -1,0 +1,44 @@
+# Chr1
+#   Gene 1
+Chr1	prediction	gene	10200	10700	.	+	.	ID=PT-gene-1
+Chr1	prediction	mRNA	10200	10700	.	+	.	ID=PT-gene-1-mRNA-1;Parent=PT-gene-1
+Chr1	prediction	CDS	10200	10300	.	+	.	ID=PT-gene-1-mRNA-1-cds-1;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	CDS	10400	10500	.	+	.	ID=PT-gene-1-mRNA-1-cds-2;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	CDS	10600	10700	.	+	.	ID=PT-gene-1-mRNA-1-cds-3;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	exon	10200	10300	.	+	.	ID=PT-gene-1-mRNA-1-exon-1;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	exon	10400	10500	.	+	.	ID=PT-gene-1-mRNA-1-exon-2;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	exon	10600	10700	.	+	.	ID=PT-gene-1-mRNA-1-exon-3;Parent=PT-gene-1-mRNA-1
+Chr1	prediction	mRNA	10200	10500	.	+	.	ID=PT-gene-1-mRNA-2;Parent=PT-gene-1
+Chr1	prediction	CDS	10200	10300	.	+	.	ID=PT-gene-1-mRNA-2-cds-1;Parent=PT-gene-1-mRNA-2
+Chr1	prediction	CDS	10400	10500	.	+	.	ID=PT-gene-1-mRNA-2-cds-2;Parent=PT-gene-1-mRNA-2
+Chr1	prediction	exon	10200	10300	.	+	.	ID=PT-gene-1-mRNA-2-exon-1;Parent=PT-gene-1-mRNA-2
+Chr1	prediction	exon	10400	10500	.	+	.	ID=PT-gene-1-mRNA-2-exon-2;Parent=PT-gene-1-mRNA-2
+#   Gene 2
+Chr1	prediction	gene	20000	23000	.	+	.	ID=PT-gene-2
+Chr1	prediction	mRNA	20000	23000	.	+	.	ID=PT-gene-2-mRNA-1;Parent=PT-gene-2
+Chr1	prediction	CDS	20000	21000	.	+	.	ID=PT-gene-2-mRNA-1-cds-1;Parent=PT-gene-2-mRNA-1
+Chr1	prediction	CDS	22000	23000	.	+	.	ID=PT-gene-2-mRNA-1-cds-1;Parent=PT-gene-2-mRNA-1
+Chr1	prediction	exon	20000	21000	.	+	.	ID=PT-gene-2-mRNA-1-cds-1;Parent=PT-gene-2-mRNA-1
+Chr1	prediction	exon	22000	23000	.	+	.	ID=PT-gene-2-mRNA-1-cds-2;Parent=PT-gene-2-mRNA-1
+# Chr2
+#   Gene 3
+Chr2	prediction	gene	30000	35000	.	+	.	ID=PT-gene-3
+Chr2	prediction	mRNA	30000	35000	.	+	.	ID=PT-gene-3-mRNA-1;Parent=PT-gene-3
+Chr2	prediction	CDS	30000	31000	.	+	.	ID=PT-gene-3-mRNA-1-cds-1;Parent=PT-gene-3-mRNA-1
+Chr2	prediction	CDS	32000	33000	.	+	.	ID=PT-gene-3-mRNA-1-cds-2;Parent=PT-gene-3-mRNA-1
+Chr2	prediction	CDS	34000	35000	.	+	.	ID=PT-gene-2-mRNA-1-cds-3;Parent=PT-gene-3-mRNA-1
+Chr2	prediction	exon	30000	31000	.	+	.	ID=PT-gene-3-mRNA-1-exon-1;Parent=PT-gene-3-mRNA-1
+Chr2	prediction	exon	32000	33000	.	+	.	ID=PT-gene-3-mRNA-1-exon-2;Parent=PT-gene-3-mRNA-1
+Chr2	prediction	exon	34000	35000	.	+	.	ID=PT-gene-3-mRNA-1-exon-3;Parent=PT-gene-3-mRNA-1
+#   Gene 4
+Chr2	prediction	gene	40000	45000	.	+	.	ID=PT-gene-4
+Chr2	prediction	mRNA	40000	45000	.	+	.	ID=PT-gene-4-mRNA-1;Parent=PT-gene-4
+Chr2	prediction	CDS	40000	42000	.	+	.	ID=PT-gene-4-mRNA-1-cds-1;Parent=PT-gene-4-mRNA-1
+Chr2	prediction	CDS	43000	45000	.	+	.	ID=PT-gene-4-mRNA-1-cds-2;Parent=PT-gene-4-mRNA-1
+Chr2	prediction	exon	40000	42000	.	+	.	ID=PT-gene-4-mRNA-1-exon-1;Parent=PT-gene-4-mRNA-1
+Chr2	prediction	exon	43000	45000	.	+	.	ID=PT-gene-4-mRNA-1-exon-2;Parent=PT-gene-4-mRNA-1
+Chr2	prediction	mRNA	40000	44000	.	+	.	ID=PT-gene-4-mRNA-2;Parent=PT-gene-4
+Chr2	prediction	CDS	40000	42000	.	+	.	ID=PT-gene-4-mRNA-2-cds-1;Parent=PT-gene-4-mRNA-2
+Chr2	prediction	CDS	43000	44000	.	+	.	ID=PT-gene-4-mRNA-2-cds-2;Parent=PT-gene-4-mRNA-2
+Chr2	prediction	exon	40000	42000	.	+	.	ID=PT-gene-4-mRNA-2-exon-1;Parent=PT-gene-4-mRNA-2
+Chr2	prediction	exon	43000	44000	.	+	.	ID=PT-gene-4-mRNA-2-exon-2;Parent=PT-gene-4-mRNA-2
