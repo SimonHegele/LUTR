@@ -164,7 +164,7 @@ Statistics reported by agat_sp_stat.pl:
 | Annotation              | # genes | # mRNA | # mRNA, UTR | # mRNA, UTR (both sides) | Mean 5'-UTR length | Mean 5'-UTR length | 
 |-------------------------|---------|--------|-------------|--------------------------|--------------------|--------------------|
 | Reference               | 22192   | 96192  | 94380       | 93379                    | 614                | 1625               |
-| Reference (UTR clipped) | 22192   | 68114  | 0           | 0                        | 0                  |                    |
+| Reference (UTR clipped) | 22192   | 68114  | 0           | 0                        | 0                  | 0                  |
 | LUTR                    | 22192   | 98317  | 96423       | 95419                    | 617                | 1637               |
 
 Statistics from [Sqanti3](https://github.com/ConesaLab/SQANTI3):
