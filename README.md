@@ -171,9 +171,7 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
   <img src="figures/workflow.png" width="500"/>
 </p>
 
-# 5 Testing LUTR
-
-## 5.1 Using idealized data
+# 5 Testing LUTR using idealized data
 
 To test LUTR we generated an idealized dataset from the GRCm39 reference annotation of the mouse.
 
@@ -204,10 +202,6 @@ NIC, NNC = Types of novel isoforms
 Since both "prediction" and "assembly" were generated from the reference annotations, incomplete splice matches and novel isoform are errors made by LUTR.
 
 The statistics from AGAT and Sqanti3 show, that LUTR was able to create a near perfect reconstruction of the reference.
-
-## 5.2 Using a StringTie-Assembly
-
-
 
 # 6 Performance
 
