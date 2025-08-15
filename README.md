@@ -219,4 +219,4 @@ Currently there is no publication on LUTR, please refer to this repository.
 
 # Acknowledgements
 
-I would like to thank the Leibniz Institute on Aging – Fritz Lipmann Institute (FLI) and the chair of Prof. Dr Steve Hoffmann in particular for providing me with the computational ressources required for the development and testing of this tool. 
+I would like to thank the Leibniz Institute on Aging – Fritz Lipmann Institute (FLI) and the chair of Prof. Dr. Steve Hoffmann in particular for providing me with the computational ressources required for the development and testing of this tool. 
