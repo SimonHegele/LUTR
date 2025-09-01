@@ -205,7 +205,7 @@ The statistics from AGAT and Sqanti3 show, that LUTR was able to create a near p
 
 # 6 Performance
 
-Despite quite some effort to improve LUTR's runtime, it is admittedly rather slow.<br>
+Despite quite some effort to improve LUTRs runtime, it is admittedly rather slow.<br>
 The required time for both gene pair slice extraction and processing highly depends on the number of isoforms of a gene.
 In the tests some genes took up to 4 minutes for extraction and up to 11 minutes for processing.
 However, on average extraction took less than 5 seconds and processing took less than 1.5 seconds per gene.
