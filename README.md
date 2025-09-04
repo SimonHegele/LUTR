@@ -82,7 +82,7 @@ Transcript matching:
   -mb , --mtbm                  Minimum bases of the predicted transcript to be matched [default: 10,000]
   -nm, --no_match_middle        Allows missing / additional middle exons in the transcrpt matching *1
   -ma, --match_all              Assign assembled transcripts to all matching predicted transcripts *2
-  -mupl , --max_utr_piece_len   Limits the length of UTR-pieces allowed in UTR-variants # TODO
+  -mupl, --max_utr_piece_len    Limits the length of UTR-pieces allowed in UTR-variants # TODO
 
 Transcript selection:
   -s , --select                 How to select from multiple UTR-variants [choices: shortest, longest, all] [default: all]
@@ -123,19 +123,22 @@ Both are only applied to predicted transcripts longer than mftm. Predicted trans
 
 ### 2.3 Output
 
-After completion you will find the following output directory:
+Contents of the output directory:
 
-| Item | Explanation |
-|--|--|
-| lutr.gff    | This is your annotation                 |
-| lutr.param  | A file that stores the parameters |
-| lutr.log    | A file with the log messages of the run
-| tmpdir      | A "temporary" folder holding the GFF-slices of the input predicted and assembled genes and those created by lutr. It doesn't get deleted so you can re-run LUTR with different parameters without needing to create the GFF-slices for the predicted and assembled genes again. |
-| step_1 | An empty file indicatig that the GFF-slices for the predicted and assembled genes have already been created. |
+| Item       | Explanation                    |
+|------------|--------------------------------|
+| lutr.gff   | Final annotation               |
+| lutr.param | File with run parameters       |
+| lutr.log   | File with log messages         |
+| tmpdir     | "Temporary" directory          |
+| step_1     | indicates completion of step 1 |
 
-UTR-variants inherit attributes from their corresponding predicted transcripts. Additionally the prediction tool and assembly tool will be stored in the attributes as well as the range on which they were predicted and assembled.
+The "temporary" directory stores the annotations for each gene, however it is not deleted automatically.
+This allows skipping step 1 when re-running LUTR with different parameters.
+It is not  to allow re-running LUTR with d
 
-I recommend running agat_sp_convert_sp_gxf2gxf.pl from AGAT on the output annotation to remove potential duplicated isoforms.
+Running agat_sp_convert_sp_gxf2gxf.pl from [AGAT] (https://github.com/NBISweden/AGAT)
+on lutr.gff is recommended for the removal of duplicated isoforms
 
 # 3 Assembly pipeline
 
@@ -151,22 +154,19 @@ assembly -h
 
 LUTR creates GFF-slices for all predicted genes and their overlapping assembled genes.
 
-1. Both GFF-files are loaded into memory at the same time.
-2. Both GFF-files are split into slices according to their chromosomes
-3. For each chromosome all pairs of overlapping predicted genes and assembled genes are
-identified in parallel
-4. For each pair of genes their corresponding GFF-slices are extracted and written to a
-   "temporary" dirctory.
-5. A file "step 1" is created in the output directory. This allows to re-run LUTR with different parameters without the need to perform step 1 again.
+1. GFF-File loading as pandas.DataFrame
+2. GFF-File chromosome slice generation
+3. Identification of pairs of overlapping predicted and assembled genes
+4. GFF-File gene slice generation for gene pairs*
 
 ### Step 2: Gene pair slice processing
 Transcript matching, removal of unsupported transcripts and UTR-variant generation
 
-1. Pairs of predicted and assembled exons are matched exon by exon as shown in the figure below taking into account the set parameters mtbm mftm, allowing matching with partially assembled transcripts. By default assembled transcripts are only assigned to the predicted bases they match and share the most bases with.
-2. If parameter --remove was set, unmatched transcripts are removed.
-3. Predicted transcripts and assembled transcripts are used to generate UTR-variants if the assembled transcript extends the predicted transcript to one or more sides.
-4. UTR-variants are selected according to the --select parameter, replacing the original transcript.
-
+1. Matching pairs of predicted and assembled transcripts exon by exon according to user defined parameters
+2. Removal of unmatched predicted transcripts (only if parameter --remove was set.
+3. Generation of UTR-variants if matching assembled transcripts extend predicted ones
+4. Length based selection of UTR-variants (according to --select parameter)
+5. 
 <p align="center">
   <img src="figures/workflow.png" width="500"/>
 </p>
@@ -204,9 +204,10 @@ Annotation statistics reported by [Sqanti3](https://github.com/ConesaLab/SQANTI3
   <img src="figures/sqanti3.png" width="500"/>
 </p>
 
-FSM      = Full splice match<br>
-ISM      = Incomplete splice match<br>
-NIC, NNC = Types of novel isoforms
+FSM = Full splice match<br>
+ISM = Incomplete splice match<br>
+NIC = Novel isoform using combinations of known splice-sites
+NNC = Novel isoform using unknown splice-sites
 
 ## 5.3 Performance
 
