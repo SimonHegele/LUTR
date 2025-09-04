@@ -191,7 +191,7 @@ Idealized dataset generated generated from mouse reference annotation GRCm39
 Annotation statistics reported by agat_sp_statistics.pl from [AGAT] (https://github.com/NBISweden/AGAT):
 
 | Annotation              | # genes | # mRNA | # mRNA, UTR | # mRNA, UTR (both sides) | Mean 5'-UTR length | Mean 5'-UTR length | 
-|-------------------------|---------|--------|-------------|--------------------------|--------------------|--------------------|
+|-------------------------|--------:|-------:|------------:|-------------------------:|-------------------:|-------------------:|
 | Reference               | 22192   | 96192  | 94380       | 93379                    | 614                | 1625               |
 | Reference (UTR clipped) | 22192   | 68114  | 0           | 0                        | 0                  | 0                  |
 | LUTR                    | 22192   | 98317  | 96428       | 95425                    | 617                | 1637               |
