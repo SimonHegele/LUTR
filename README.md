@@ -177,7 +177,7 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
 
 Idealized dataset generated generated from mouse reference annotation GRCm39
 
-- "Prediction": coding genes and their UTR-clipped mRNAs
+- "Prediction": coding genes and their UTR-clipped mRNAs<br>
   Generated using script [noUTR](https://github.com/SimonHegele/LUTR/blob/main/src/scripts/noUTR.py)
   for UTR-clipping and agat_convert_sp_gxf2gxf.pl from [AGAT] (https://github.com/NBISweden/AGAT)
   for the addition of exons matching the coding sequences and removal of duplicates stemming from mRNAs
