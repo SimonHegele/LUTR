@@ -85,12 +85,12 @@ class LUTRArgparser(ArgumentParser):
                           help="Assign assembled transcripts to all matching predicted transcripts *2")
         
         grp2 = self.add_argument_group(title="Transcript selection")
-        grp2.add_argument("-s", "--select",
+        grp2.add_argument("-s","--select",
                           help="How to select from multiple UTR-variants [choices: shortest, longest, all] [default: all]",
                           choices=["shortest", "longest", "all"],
                           default="all",
                           metavar="")
-        grp1.add_argument("-mupl", "--max_utr_piece_len",
+        grp1.add_argument("-mupl","--max_utr_piece_len",
                           metavar="",
                           help="Limits the length of UTR-pieces allowed in UTR-variants # TODO")
         grp2.add_argument("-r","--remove_unsupported",
