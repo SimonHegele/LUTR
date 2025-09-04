@@ -78,8 +78,8 @@ options:
   -h, --help                    show this help message and exit
 
 Transcript matching:
-  -mf , --mftm                  Minimum fraction of the predicted transcript to be matched [default: 0.9]
-  -mb , --mtbm                  Minimum bases of the predicted transcript to be matched [default: 10,000]
+  -mf, --mftm                   Minimum fraction of the predicted transcript to be matched [default: 0.9]
+  -mb, --mtbm                   Minimum bases of the predicted transcript to be matched [default: 10,000]
   -nm, --no_match_middle        Allows missing / additional middle exons in the transcrpt matching *1
   -ma, --match_all              Assign assembled transcripts to all matching predicted transcripts *2
   -mupl, --max_utr_piece_len    Limits the length of UTR-pieces allowed in UTR-variants # TODO
