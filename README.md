@@ -206,7 +206,7 @@ Annotation statistics reported by [Sqanti3](https://github.com/ConesaLab/SQANTI3
 
 FSM = Full splice match<br>
 ISM = Incomplete splice match<br>
-NIC = Novel isoform using combinations of known splice-sites
+NIC = Novel isoform using combinations of known splice-sites<br>
 NNC = Novel isoform using unknown splice-sites
 
 ## 5.3 Performance
