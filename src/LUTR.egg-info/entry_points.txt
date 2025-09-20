@@ -1,0 +1,4 @@
+[console_scripts]
+LUTR = lutr.main:main
+assembly = scripts.assembly:main
+noUTR = scripts.noUTR:main

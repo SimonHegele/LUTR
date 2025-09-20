@@ -1,0 +1,6 @@
+# Full match for the predicted transcript with UTR extensions on one side
+Chr1	Test	exon	3500	4000	.	.	.	ID=at_5-exon_1;Parent=at_5
+Chr1	Test	exon	5000	6000	.	.	.	ID=at_5-exon_2;Parent=at_5
+Chr1	Test	exon	7000	8000	.	.	.	ID=at_5-exon_3;Parent=at_5
+Chr1	Test	exon	9000	10000	.	.	.	ID=at_5-exon_4;Parent=at_5
+Chr1	Test	exon	11000	120000	.	.	.	ID=at_5-exon_5;Parent=at_5

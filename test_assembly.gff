@@ -1,0 +1,28 @@
+# Chr1
+#   Gene 1
+Chr1	assembly	gene	10200	10700	.	+	.	ID=AT-gene-1
+Chr1	assembly	RNA	10200	10700	.	+	.	ID=AT-gene-1-RNA-1;Parent=AT-gene-1
+Chr1	assembly	exon	10100	10300	.	+	.	ID=AT-gene-1-RNA-1-exon-1;Parent=AT-gene-1-RNA-1;gene_id=AT-gene-1
+Chr1	assembly	exon	10400	10500	.	+	.	ID=AT-gene-1-RNA-1-exon-2;Parent=AT-gene-1-RNA-1;gene_id=AT-gene-1
+Chr1	assembly	exon	10600	10700	.	+	.	ID=AT-gene-1-RNA-1-exon-3;Parent=AT-gene-1-RNA-1;gene_id=AT-gene-1
+Chr1	assembly	RNA	10200	10500	.	+	.	ID=AT-gene-1-RNA-2;Parent=AT-gene-1
+Chr1	assembly	exon	10000	10100	.	+	.	ID=AT-gene-1-RNA-2-exon-1;Parent=AT-gene-1-RNA-2;gene_id=AT-gene-1
+Chr1	assembly	exon	10200	10300	.	+	.	ID=AT-gene-1-RNA-2-exon-2;Parent=AT-gene-1-RNA-2;gene_id=AT-gene-1
+Chr1	assembly	exon	10400	10600	.	+	.	ID=AT-gene-1-RNA-2-exon-3;Parent=AT-gene-1-RNA-2;gene_id=AT-gene-1
+Chr1	assembly	RNA	10200	10700	.	+	.	ID=AT-gene-1-RNA-3;Parent=AT-gene-1
+Chr1	assembly	exon	10200	10300	.	+	.	ID=AT-gene-1-RNA-3-exon-1;Parent=AT-gene-1-RNA-3;gene_id=AT-gene-1
+Chr1	assembly	exon	10400	10500	.	+	.	ID=AT-gene-1-RNA-3-exon-2;Parent=AT-gene-1-RNA-3;gene_id=AT-gene-1
+Chr1	assembly	exon	10525	10575	.	+	.	ID=AT-gene-1-RNA-3-exon-3;Parent=AT-gene-1-RNA-3;gene_id=AT-gene-1
+Chr1	assembly	exon	10600	10700	.	+	.	ID=AT-gene-1-RNA-3-exon-4;Parent=AT-gene-1-RNA-3;gene_id=AT-gene-1
+#   Gene 2
+Chr1	assembly	gene	20000	24000	.	+	.	ID=AT-gene-2
+Chr1	assembly	RNA	20000	24000	.	+	.	ID=AT-gene-2-RNA-1;Parent=AT-gene-2
+Chr1	assembly	exon	20000	21000	.	+	.	ID=AT-gene-2-RNA-1-exon-1;Parent=AT-gene-2-RNA-1
+Chr1	assembly	exon	22000	24000	.	+	.	ID=AT-gene-2-RNA-1-exon-2;Parent=AT-gene-2-RNA-1
+# Chr2
+#   Gene 3
+Chr2	assembly	gene	30000	36000	.	+	.	ID=AT-gene-3
+Chr2	assembly	mRNA	30000	36000	.	+	.	ID=AT-gene-3-mRNA-1;Parent=AT-gene-3
+Chr2	assembly	exon	30000	31000	.	+	.	ID=AT-gene-3-mRNA-1-exon-1;Parent=AT-gene-3-mRNA-1
+Chr2	assembly	exon	32000	33000	.	+	.	ID=AT-gene-3-mRNA-1-exon-2;Parent=AT-gene-3-mRNA-1
+Chr2	assembly	exon	34000	36000	.	+	.	ID=AT-gene-3-mRNA-1-exon-3;Parent=AT-gene-3-mRNA-1

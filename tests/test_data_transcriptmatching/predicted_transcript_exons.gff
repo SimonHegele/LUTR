@@ -1,0 +1,4 @@
+Chr1	Test	exon	3000	4000	.	.	.	ID=pt_1-exon_1;Parent=pt_1
+Chr1	Test	exon	5000	6000	.	.	.	ID=pt_1-exon_2;Parent=pt_1
+Chr1	Test	exon	7000	8000	.	.	.	ID=pt_1-exon_3;Parent=pt_1
+Chr1	Test	exon	9000	10000	.	.	.	ID=pt_1-exon_4;Parent=pt_1

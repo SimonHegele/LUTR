@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: LUTR
+Version: 0.2
+Summary: UTR extensions for annotations from protein orthology based gene prediction tools using exons from reference based transcriptome assembly
+License: GPL3
+Requires-Python: >=3.10
+Requires-Dist: pandas
+Requires-Dist: numpy
