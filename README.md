@@ -174,24 +174,46 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
   <img src="figures/workflow.png" width="500"/>
 </p>
 
-# 5 Testing LUTR using idealized data
+# 5 Testing LUTR
 
 ## 5.1 Test data
 
-Idealized dataset generated generated from mouse reference annotation GRCm39
+### 5.1.1 Prediction
 
-- "Prediction": coding genes and their UTR-clipped mRNAs<br>
-  Generated using script [noUTR](https://github.com/SimonHegele/LUTR/blob/main/src/scripts/noUTR.py)
-  for UTR-clipping and agat_convert_sp_gxf2gxf.pl from [AGAT] (https://github.com/NBISweden/AGAT)
-  for the addition of exons matching the coding sequences and removal of duplicates stemming from mRNAs
-  with multiple anotated UTR-variants.
-- "Assembly": reference annotation without non-genic and "CDS" features.
+An idealized "prediction" of coding sequences was created from the mouse GRCm39 reference annotation.
+1. [noUTR.py](https://github.com/SimonHegele/LUTR/blob/main/src/scripts/noUTR.py) was used to remove UTRs from the annotation.
+2. agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) was used to remove duplicated transcript isoforms.
 
-## 5.2. Results
+### 5.1.2. Assemblies
+
+Assembly 1:
+perfect “assembly” / goal annotation (full reference gene records)
+
+Assembly 2:
+~600 million Illumina read pairs (SRA-ID: PRJNA375882), mapped with [STAR](https://github.com/alexdobin/STAR)
+~ 60 million r2c2 nanopore reads (SRA-ID: PRJNA971991), mapped with [Minimap2](https://github.com/lh3/minimap2)
+assembled with [StringTie3](https://github.com/gpertea/stringtie) in conservative mode 
+
+## 5.2 Computational ressources
+
+Test 1:
+required RAM:   ~6.2GB<br>
+required Time:  00h45m (64 threads, server) / 5h20m (8 threads, laptop)
+
+Test 2: 
+required RAM:   ~3.9GB<br>
+required Time:  00h23m (64 threads, server) / 5h20m (8 threads, laptop)
+
+The required time required to process a gene is highly dependent on the number of isoforms annotated.<br>
+While most genes are processed within seconds, few genes may take several minutes to process.
+
+## 5.3 Results
 
 ### 5.2.1 Basic Annotation statistics
 
 Annotation statistics reported by agat_sp_statistics.pl from [AGAT] (https://github.com/NBISweden/AGAT):
+
+Test 1:
 
 | Annotation              | # genes | # mRNA | # mRNA, UTR | # mRNA, UTR (both sides) | Mean 5'-UTR length | Mean 5'-UTR length | 
 |-------------------------|--------:|-------:|------------:|-------------------------:|-------------------:|-------------------:|
@@ -199,12 +221,27 @@ Annotation statistics reported by agat_sp_statistics.pl from [AGAT] (https://git
 | Reference (UTR clipped) | 22192   | 68114  | 0           | 0                        | 0                  | 0                  |
 | LUTR                    | 22192   | 98317  | 96428       | 95425                    | 617                | 1637               |
 
-### 5.2.2 Analysis of structural isoforms
+Test 2:
+
+| Annotation              | # genes | # mRNA | # mRNA, UTR | # mRNA, UTR (both sides) | Mean 5'-UTR length | Mean 5'-UTR length | 
+|-------------------------|--------:|-------:|------------:|-------------------------:|-------------------:|-------------------:|
+| Reference               | 22192   | 96192  | 94380       | 93379                    | 614                | 1625               |
+| Assembly                | 33902   | ?      | ?           | ?                        | ?                  | ?                  |
+| LUTR                    | 22192   | 94728  | 79557       | 79121                    | 9735               | 1828               |     
+
+### 5.2.2 Structural analysis of isoforms
 
 Annotation statistics reported by [Sqanti3](https://github.com/ConesaLab/SQANTI3)
 
 <p align="center">
-  <img src="figures/sqanti3.png" width="500"/>
+  <figure style="display:inline-block; text-align:center; margin:10px;">
+    <img src="figures/sqanti3.png" alt="Figure 1" width="45%">
+    <figcaption>Figure 1: Sqanti3 results for test 1 (idealized assembly)</figcaption>
+  </figure>
+  <figure style="display:inline-block; text-align:center; margin:10px;">
+    <img src="figures/sqanti3_test2.png" alt="Figure 2" width="45%">
+    <figcaption>Figure 2: Sqanti3 results for test 2 (real assembly)</figcaption>
+  </figure>
 </p>
 
 FSM = Full splice match<br>
@@ -212,14 +249,10 @@ ISM = Incomplete splice match<br>
 NIC = Novel isoform using combinations of known splice-sites<br>
 NNC = Novel isoform using unknown splice-sites
 
-## 5.3 Performance
+### 5.3.3 Interpretation
 
-required RAM:   ~6.2GB<br>
-required Time:  00h45m (64 threads, server) / 5h20m (8 threads, laptop)
-
-Data extraction and processing time per gene highly depends on the number of isoforms and exons per isoform.<br>
-Extraction: < 1.5s / gene ( 4m max)<br>
-Processing: < 5.0s / gene (11m max)
+The reconstruction of the reference annotation from the idealized data is very close to the original.<br>
+At the same time LUTR inherits the problems of the methods used to create the input annotations.
 
 # Citing LUTR
 
