@@ -214,11 +214,11 @@ NNC = Novel isoform using unknown splice-sites
 
 ## 5.3 Performance
 
-required RAM:   ~6.2GB
+required RAM:   ~6.2GB<br>
 required Time:  00h45m (64 threads, server) / 5h20m (8 threads, laptop)
 
-Data extraction and processing time per highly depends on the number of isoforms.
-Extraction: < 1.5s / gene ( 4m max)
+Data extraction and processing time per gene highly depends on the number of isoforms and exons per isoform.<br>
+Extraction: < 1.5s / gene ( 4m max)<br>
 Processing: < 5.0s / gene (11m max)
 
 # Citing LUTR
