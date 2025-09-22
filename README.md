@@ -169,7 +169,7 @@ Transcript matching, removal of unsupported transcripts and UTR-variant generati
 2. Removal of unmatched predicted transcripts (only if parameter --remove was set.
 3. Generation of UTR-variants if matching assembled transcripts extend predicted ones
 4. Length based selection of UTR-variants (according to --select parameter)
-5. 
+
 <p align="center">
   <img src="figures/workflow.png" width="500"/>
 </p>
@@ -234,14 +234,14 @@ Test 2:
 Annotation statistics reported by [Sqanti3](https://github.com/ConesaLab/SQANTI3)
 
 <p align="center">
-  <figure style="display:inline-block; text-align:center; margin:10px;">
-    <img src="figures/sqanti3.png" alt="Figure 1" width="45%">
-    <figcaption>Figure 1: Sqanti3 results for test 1 (idealized assembly)</figcaption>
-  </figure>
-  <figure style="display:inline-block; text-align:center; margin:10px;">
-    <img src="figures/sqanti3_test2.png" alt="Figure 2" width="45%">
-    <figcaption>Figure 2: Sqanti3 results for test 2 (real assembly)</figcaption>
-  </figure>
+  <img src="figures/sqanti3.png" alt="Figure 1" width="45%">
+  <img src="figures/sqanti3_test2.png" alt="Figure 2" width="45%">
+</p>
+
+<p align="center">
+  <sub>Figure 1: Sqanti3 results for test 1 (idealized assembly)</sub>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <sub>Figure 2: Figure 2: Sqanti3 results for test 2 (real assembly)</sub>
 </p>
 
 FSM = Full splice match<br>
