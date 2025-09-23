@@ -255,7 +255,7 @@ At the same time LUTR inherits the problems of the methods used to create the in
 
 # 6. Comparison to predecessor UTRpy
 
-LUTR improves parallelization:<br>
+**LUTR improves parallelization:**<br>
 UTRpy: Splitting of annotations into chromosome slices<br>
 -> Number of usable CPU-cores limited by the number of chromosomes<br>
 -> Workload is not distributed evenly among processes<br>
@@ -263,7 +263,7 @@ LUTR: Splitting of annotations into chromosome slices and into gene slices secon
 -> Number of usable CPU-cores practically unlimited<br>
 -> Even distribution of workload among threads
 
-LUTR improves transcript matching:<br>
+**LUTR improves transcript matching:**<br>
 UTRpy:<br>
 -> Attempts matching for each pair of assembled and predicted transcript on a chromosome. <br>
 -> Only allows only perfect transcript matches<br>
