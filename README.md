@@ -211,7 +211,7 @@ While most genes are processed within seconds, few genes may take several minute
 
 ### 5.2.1 Basic Annotation statistics
 
-Annotation statistics reported by agat_sp_statistics.pl from [AGAT] (https://github.com/NBISweden/AGAT):
+Annotation statistics reported by agat_sp_statistics.pl from [AGAT](https://github.com/NBISweden/AGAT):
 
 Test 1:
 
