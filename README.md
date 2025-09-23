@@ -16,8 +16,7 @@ functional annotations across species by leveraging evolutionary conservation. H
 genome annotations from such methods typically lack the less conserved UTRs. LUTR
 supplements these by using matching transcripts from reference-based transcriptome assemblies.
 
-LUTR succeeds [UTRpy](https://github.com/SimonHegele/UTRpy), which it differs from mainly by
-it's parallelization strategy.
+LUTR succeeds [UTRpy](https://github.com/SimonHegele/UTRpy)
 
 ## 1 Installation
 
@@ -202,7 +201,7 @@ required Time:  00h45m (64 threads, server) / 5h20m (8 threads, laptop)
 
 Test 2: 
 required RAM:   ~3.9GB<br>
-required Time:  00h23m (64 threads, server) / 5h20m (8 threads, laptop)
+required Time:  00h23m (64 threads, server) / 4h36m (8 threads, laptop)
 
 The required time required to process a gene is highly dependent on the number of isoforms annotated.<br>
 While most genes are processed within seconds, few genes may take several minutes to process.
@@ -253,6 +252,26 @@ NNC = Novel isoform using unknown splice-sites
 
 The reconstruction of the reference annotation from the idealized data is very close to the original.<br>
 At the same time LUTR inherits the problems of the methods used to create the input annotations.
+
+# 6. Comparison to predecessor UTRpy
+
+LUTR improves parallelization:<br>
+UTRpy: Splitting of annotations into chromosome slices
+-> Number of usable CPU-cores limited by the number of chromosomes
+-> Workload is not distributed evenly among processes
+LUTR: Splitting of annotations into chromosome slices and into gene slices second.
+-> Number of usable CPU-cores practically unlimited
+-> Even distribution of workload among threads
+
+LUTR improves transcript matching:
+UTRpy:
+-> Attempts matching for each pair of assembled and predicted transcript on a chromosome. 
+-> Only allows only perfect transcript matches
+LUTR:
+-> Attempts matching only for pairs of assembled and predicted transcript when the assembled and predicted genes overlap
+-> Acknowleding that assembled transcriptomes or even individual transcripts might not be complete, LUTR provides parameters allowing imperfect transcript matches.
+
+LUTR is significantly more efficient, especially for annotations from gene predictions, where genes may have multiple annotated isoforms.   
 
 # Citing LUTR
 
