@@ -205,11 +205,12 @@ def processgenepair_wrapper(args: tuple[str, str, str, float, int, int, int, boo
 
     tmpdir, p_path, a_path, mftm, mtbm, verbosity, n_genes, remove, select, match_all, match_middle = args
 
+    gene_id  = log_wrapper(processgenepair,
+                           (tmpdir,p_path,a_path,mftm,mtbm,remove,select,match_all,match_middle))
+
     progress = len(listdir(path.join(tmpdir, "genes_lutr")))
     duration = time()-start
     percent  = round(100*progress/n_genes,1)
-    gene_id  = log_wrapper(processgenepair,
-                           (tmpdir,p_path,a_path,mftm,mtbm,remove,select,match_all,match_middle))
     
     if progress % 10**verbosity == 0:
         info(f"{progress:>6} / {n_genes} (~{percent:6>}%), {duration:>6.2f} seconds {gene_id}")
@@ -265,4 +266,5 @@ def processgenepairs_multiprocessing(tmpdir: str,
 
     # Wait for workers to complete
     for w in workers:
+
         w.join()
