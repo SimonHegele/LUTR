@@ -261,7 +261,7 @@ UTRpy: Splitting of annotations into chromosome slices<br>
 -> Workload is not distributed evenly among processes<br>
 LUTR: Splitting of annotations into chromosome slices and into gene slices second<br>
 -> Number of usable CPU-cores practically unlimited<br>
--> Even distribution of workload among threads
+-> Even distribution of workload among processes
 
 **LUTR improves transcript matching:**<br>
 UTRpy:<br>
