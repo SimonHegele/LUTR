@@ -256,20 +256,20 @@ At the same time LUTR inherits the problems of the methods used to create the in
 # 6. Comparison to predecessor UTRpy
 
 LUTR improves parallelization:<br>
-UTRpy: Splitting of annotations into chromosome slices
--> Number of usable CPU-cores limited by the number of chromosomes
--> Workload is not distributed evenly among processes
-LUTR: Splitting of annotations into chromosome slices and into gene slices second.
--> Number of usable CPU-cores practically unlimited
+UTRpy: Splitting of annotations into chromosome slices<br>
+-> Number of usable CPU-cores limited by the number of chromosomes<br>
+-> Workload is not distributed evenly among processes<br>
+LUTR: Splitting of annotations into chromosome slices and into gene slices second<br>
+-> Number of usable CPU-cores practically unlimited<br>
 -> Even distribution of workload among threads
 
-LUTR improves transcript matching:
-UTRpy:
--> Attempts matching for each pair of assembled and predicted transcript on a chromosome. 
--> Only allows only perfect transcript matches
-LUTR:
--> Attempts matching only for pairs of assembled and predicted transcript when the assembled and predicted genes overlap
--> Acknowleding that assembled transcriptomes or even individual transcripts might not be complete, LUTR provides parameters allowing imperfect transcript matches.
+LUTR improves transcript matching:<br>
+UTRpy:<br>
+-> Attempts matching for each pair of assembled and predicted transcript on a chromosome. <br>
+-> Only allows only perfect transcript matches<br>
+LUTR:<br>
+-> Attempts matching only for pairs of assembled and predicted transcript when the assembled and predicted genes overlap<br>
+-> Acknowledes potential incompleteness of assembled transcriptomes or transcripts and provides parameters allowing imperfect matches<br>
 
 LUTR is significantly more efficient, especially for annotations from gene predictions, where genes may have multiple annotated isoforms.   
 
