@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="LUTR",
-    version="0.2",
+    version="1.0",
     license="GPL3",
     description="UTR extensions for annotations from protein orthology based gene prediction tools using exons from reference based transcriptome assembly",
     package_dir={"": "src"},
