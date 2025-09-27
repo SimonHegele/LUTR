@@ -8,8 +8,11 @@ Description:    Functions and custom Exceptions for pandas.Dataframe represented
                 (alphabetically sorted)
 """
 
+from collections     import defaultdict
+from itertools       import chain
 from pandas          import DataFrame, Series, read_csv
-from typing          import Callable, Generator, Iterable
+from typing          import Callable, Generator, Iterable, Hashable
+
 
 gff_columns = ["seqname",
                "source",
@@ -21,7 +24,7 @@ gff_columns = ["seqname",
                "frame",
                "attributes"]
 
-class AttributesException(Exception):
+class AttributesError(Exception):
     
     def __init__(self, feature) -> None:
         
@@ -29,7 +32,7 @@ class AttributesException(Exception):
         
         super().__init__(error_msg)
         
-class NoIDException(Exception):
+class NoIDError(Exception):
     
     def __init__(self, feature) -> None:
         
@@ -37,25 +40,19 @@ class NoIDException(Exception):
         
         super().__init__(error_msg)
 
-class NoAncestorFoundException(Exception):
+class MultipleParentsError(Exception):
     
-    def __init__(self, type: str, feature_id: str, trace: list[Series]):
-
-        trace_IDs = [attributes_dict(feature)["ID"] for feature in trace]
-        trace_str = "\n".join(id for id in trace_IDs)
-        error_msg = f"No {type} ancestor for {feature_id},\nTrace:\n{trace_str}"
-
-        super().__init__(error_msg)
-
-class MultipleAncestorsFoundException(Exception):
-    
-    def __init__(self, type: str, feature_id: str, trace: list[Series], ancestors: DataFrame):
-
-        trace_IDs = [attributes_dict(feature)["ID"] for feature in trace]
-        ances_IDs = [attributes_dict(a)["ID"] for _, a in ancestors.iterrows()]
-        trace_str = "\n".join(id for id in trace_IDs)
-        error_msg  = f"Multiple {type} ancestors ({ances_IDs}) for {feature_id},\nTrace:\n{trace_str}"
-
+    def __init__(self,
+                 gff:     DataFrame,
+                 feature: Series,
+                 parents: list[Hashable]):
+        
+        error_msg  = f"Multiple Parents:\n"
+        error_msg += f"Feature:  {feature_string(feature)}"
+        
+        for i, parent_index in enumerate(parents):
+            error_msg += f"Parent i: {feature_string(gff.iloc[parent_index])}"
+            
         super().__init__(error_msg)
 
 def attributes_dict(feature: Series) -> dict[str, str]:
@@ -67,12 +64,12 @@ def attributes_dict(feature: Series) -> dict[str, str]:
         attributes = {a.split("=")[0]: a.split("=")[1]
                       for a in feature["attributes"].split(";")} 
     except:
-        raise AttributesException(feature)
+        raise AttributesError(feature)
     
     if "ID" in attributes.keys():
         return attributes
     else:
-        raise NoIDException(feature)
+        raise NoIDError(feature)
 
 def attributes_str(attributes: dict[str, str]) -> str:
     
@@ -100,67 +97,46 @@ def empty_gff() -> DataFrame:
     """
     return DataFrame({}, columns = gff_columns)
 
-def get_ancestor(gff: DataFrame,
-                 feature: Series,
-                 type: str) -> Series:
-    """
-    Finds the ancestor of the specified type for the input feature by following
-    child-parent relationships
-
-    Args:
-        gff (DataFrame):    A GFF file
-        feature (Series):   A row from a GFF-file representing a genomic feature
-        type (str):         A genomic feature type
-
-    Raises:
-        NoAncestorFoundException:        File is malformatted or function was called
-                                         incorrectly (Example: Trying to find an ancestor
-                                         of type "exon" for a gene)
-        MultipleAncestorsFoundException: File is malformatted
-
-    Returns:
-        Series: The feature or the first ancestor of the specified type
-    """
-
-    feature_id = attributes_dict(feature)["ID"]
-    child      = feature
-    trace      = []
-
-    for _ in range(5):
-
-        trace.append(child)
-
-        if type==(child["type"]):
-            return child
+def get_map_id2index(gff: DataFrame) -> defaultdict[str, list[Hashable]]:
+    
+    map_id2index = defaultdict(list)
         
-        if child["Parent"] is None:
-            raise NoAncestorFoundException(type, feature_id, trace)
+    for i, feature in gff.iterrows():
+        
+        map_id2index[feature["ID"]].append(i)
+        
+    return map_id2index
 
-        parents = gff[gff["ID"]==child["Parent"]]
-
-        if len(parents) == 0:
-            raise NoAncestorFoundException(type, feature_id, trace)
+def get_map_parent2children(gff: DataFrame,
+                            map_id2index: defaultdict[str, list[Hashable]]) -> defaultdict[Hashable, list[Hashable]]:
+    
+    map_parent2children = defaultdict(list)
+    
+    for i, feature in gff.iterrows():
+        
+        if feature["Parent"] is None:
+            continue
+        
+        parents = map_id2index[feature["Parent"]]
+        
         if len(parents) > 1:
-            raise MultipleAncestorsFoundException(type, feature_id, trace, parents)
-        
-        child = parents.iloc[0]
-        
-    raise NoAncestorFoundException(type, feature_id, trace)
-
-def get_subtree(gff: DataFrame, feature: Series) -> DataFrame:
-    """
-    Args:
-        gff (DataFrame):    A GFF file
-        feature (Series):   A row from a GFF-file representing a genomic feature
-
-    Returns:
-        DataFrame: All features from gff under the hierarchy of the input feature
-    """
-
-    prefiltered   = overlapping_features(gff, feature)
-    descends_mask = prefiltered.apply(lambda f: is_descendant(prefiltered, f, feature), axis=1)
-
-    return prefiltered[descends_mask]
+            raise MultipleParentsError(gff, feature, parents)
+        if len(parents) == 1:
+            map_parent2children[parents[0]].append(i)
+            
+    return map_parent2children
+            
+def get_subtree(gff:                 DataFrame,
+                index:               Hashable,
+                map_parent2children: defaultdict[Hashable, list[Hashable]]) -> list:
+    
+    children = map_parent2children[index]
+    
+    if children == 0:
+        return []
+    
+    return [index] + list(chain.from_iterable([get_subtree(gff, child, map_parent2children)
+                                               for child in children]))
 
 def get_trans(gff: DataFrame):
     
@@ -255,15 +231,6 @@ def including_features(gff: DataFrame,
     mask_includes = prefiltered.apply(lambda f: feature_includes(f, feature), axis=1)
 
     return prefiltered[mask_includes]
-
-def is_descendant(gff: DataFrame,
-                  feature_1: Series,
-                  feature_2: Series) -> bool:
-    
-    try:
-        return feature_2.equals(get_ancestor(gff, feature_1, feature_2["type"]))
-    except NoAncestorFoundException:
-        return False
     
 def overlap_length(feature_1: Series,
                    feature_2: Series) -> int:
@@ -317,12 +284,12 @@ def to_string(feature: Series):
 
 def type_split(gff: DataFrame, type: str) -> Generator[DataFrame, None, None]:
     
-    for i, feature in gff.loc[gff["type"].str.contains(type, regex=False)].iterrows():
-        
-        subtree = get_subtree(gff, feature)
-        gff     = gff.drop(subtree.index)
+    features = gff.loc[gff["type"].str.contains(type, regex=False)]
+    map_p2ch = get_map_parent2children(gff, get_map_id2index(gff))
+    
+    for i, feature in features.iterrows():
 
-        yield subtree
+        yield gff.iloc[get_subtree(gff, i, map_p2ch)]
 
 def write_gff(gff: DataFrame, file_path: str, mode='w'):
 

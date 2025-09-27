@@ -14,8 +14,7 @@ from os                          import path, listdir, remove
 from .argument_parser            import LUTRArgparser
 from .lutr_logging               import logging_setup, log_wrapper
 from .gffutils                   import load_gff, seqname_split_wrapper, write_gff
-from .gene_pair_slice_gen_lt     import gene_pair_slices_mp_lt
-from .gene_pair_slice_gen_mt     import gene_pair_slices_mp_mt
+from .gene_pair_slice_gen        import gene_pair_slices_multiprocessed
 from .process_gene_pairs         import processgenepairs_multiprocessing
 
 def delete_all_files(folder):
@@ -26,7 +25,6 @@ def delete_all_files(folder):
             
 def load_data(path_prediction: str, path_assembly: str) -> tuple[DataFrame, DataFrame]:
     
-    info("Loading GFF-files ...")
     info("Loading GFF-file (Prediction) ...")
     prediction = log_wrapper(load_gff, path_prediction)
     info("Loading GFF-file (Assembly) ...")
@@ -58,19 +56,11 @@ def main():
             prediction, assembly = pool.map(seqname_split_wrapper,
                                             [(prediction, seqnames),(assembly,seqnames)])
             
-        # Depending on the number of threads we will be using a different strategy for
-        # parallelizing the gene pair slice generation
-        
-        if len(seqnames)/2 > args.threads:
-            # If given a low number of threads we will be processing each chromosome
-            # seperately without shared memory across all processes
-            gene_pair_slices_mp_lt(prediction, assembly, args.threads, args.verbosity, tmpdir)
-            
-        else:
-            # If given a high number of threads we will be processing each gene separately
-            # with shared memory. Takes more time per gene but is overall faster as we 
-            # can use all processes fully
-            gene_pair_slices_mp_mt(prediction, assembly, args.threads, args.verbosity, tmpdir, seqnames)
+        info("Generating gene slices ...")
+        gene_pair_slices_multiprocessed(prediction,
+                                        assembly,
+                                        args.threads,
+                                        tmpdir)
 
         open(path.join(args.outdir, "step_1"),"x").close()
         

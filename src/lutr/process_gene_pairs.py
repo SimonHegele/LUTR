@@ -119,15 +119,6 @@ def get_utr_matrix(p_trans:        list[Series],
           for j, _ in enumerate(a_trans)] for i, _ in enumerate(p_trans)]
     
     return m
-
-def get_trans_slices(gene_slice: DataFrame, trans: list[Series]) -> Generator:
-    
-    for tran in trans:
-        
-        tran_slice = get_subtree(gene_slice, tran)
-        gene_slice = gene_slice.drop(tran_slice.index)
-        
-        yield tran_slice.reset_index(drop=True)
    
 def processgenepair(tmpdir:     str,
                     p_path:     str,
@@ -138,6 +129,19 @@ def processgenepair(tmpdir:     str,
                     select:       str,
                     match_all:    bool,
                     match_middle: bool) -> str:
+    
+    def transcript_slices(gene_slice: DataFrame,
+                          transcripts: list[Series]) -> Generator:
+        
+        id2index     = get_map_id2index(gene_slice)
+        parent2child = get_map_parent2children(gene_slice, id2index)
+    
+        for transcript in transcripts:
+            
+            indices          = get_subtree(gene_slice, transcript.name, parent2child)
+            transcript_slice = gene_slice.iloc[indices].reset_index(drop=True)
+            
+            yield transcript_slice
        
     # Loading Data
     p_gene_slice = load_gff(p_path)
@@ -148,8 +152,8 @@ def processgenepair(tmpdir:     str,
     # Extracting transcript data
     p_trans        = [tran for _, tran in get_trans(p_gene_slice).iterrows()]
     a_trans        = [tran for _, tran in get_trans(a_gene_slice).iterrows()]
-    p_trans_slices = list(get_trans_slices(p_gene_slice, p_trans))
-    a_trans_slices = list(get_trans_slices(a_gene_slice, a_trans))
+    p_trans_slices = list(transcript_slices(p_gene_slice, p_trans))
+    a_trans_slices = list(transcript_slices(a_gene_slice, a_trans))
     p_trans_exons  = [slice.loc[slice["type"]=="exon"] for slice in p_trans_slices]
     a_trans_exons  = [slice.loc[slice["type"]=="exon"] for slice in a_trans_slices]
     
