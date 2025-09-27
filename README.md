@@ -196,12 +196,12 @@ assembled with [StringTie3](https://github.com/gpertea/stringtie) in conservativ
 ## 5.2 Computational ressources
 
 Test 1:
-required RAM:   ~6.2GB<br>
-required Time:  00h45m (64 threads, server) / 5h20m (8 threads, laptop)
+required RAM:   ~4.8GB<br>
+required Time:  05m26s (64 threads, server) / 30m20s (8 threads, laptop)
 
 Test 2: 
 required RAM:   ~3.9GB<br>
-required Time:  00h23m (64 threads, server) / 4h36m (8 threads, laptop)
+required Time:  04m35s (64 threads, server)
 
 The required time required to process a gene is highly dependent on the number of isoforms annotated.<br>
 While most genes are processed within seconds, few genes may take several minutes to process.
