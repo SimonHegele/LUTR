@@ -106,24 +106,7 @@ agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) can
 To generate an assembly annotation matching your predicted one you can use the assembly
 pipeline described in section 3.
 
-### 2.2 LUTR - parameters
-
-**Transcript matching**
-
-These parameters exist to account for incomplete read data and incompletely assembled
-transcripts.
-
-1. mtbm:<br>Assembled transcripts must match predicted transcripts for at least this number of bases
-2. mftm:<br>Assembled transcripts must match predicted transcripts for at least this fraction of their bases
-
-Both are only applied to predicted transcripts longer than mftm. Predicted transcripts shorter than this must be matched in full.
-
-**Transcript selection**
-
-1. select:<br>Many transcripts have multiple UTR-variants. You can choose if you want all possible UTR-variants or only the shortest or longest. Independent of your choice all of them will be computed.
-2. remove:<br>Removing of unmatched predicted transcripts. Allows to filter potentially incorrectly predicted transcripts and genes.
-
-### 2.3 Output
+### 2.2 Output
 
 Contents of the output directory:
 
@@ -142,13 +125,19 @@ It is not  to allow re-running LUTR with d
 Running agat_sp_convert_sp_gxf2gxf.pl from [AGAT] (https://github.com/NBISweden/AGAT)
 on lutr.gff is recommended for the removal of duplicated isoforms
 
-# 3 Assembly pipeline
+# 3 Additional scripts
 
-LUTR comes with an assembly pipeline, for usage information:
-
+LUTR comes with two additional scripts:
 ```
 assembly -h
+noUTR -h
 ```
+
+**assembly**<br>
+Assembly pipeline
+- Short read mapping with STAR (or input of mapped reads)
+- Long read mapping with Minimap2 (or input of mapped reads)
+- Assembly with StringTie
 
 ## 4 LUTR workflow
 
