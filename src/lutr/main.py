@@ -99,6 +99,7 @@ def main():
                             [path.join(tmpdir,file) for file in listdir(tmpdir)])
     
     key      = lambda x: (x.iloc[0]["seqname"], x.iloc[0]["start"])
+    lutr_gff = [gene_slice for gene_slice in lutr_gff if len(gene_slice) > 0]
     lutr_gff = sorted(lutr_gff, key=key)
     lutr_gff = concat(lutr_gff)
     
@@ -108,6 +109,7 @@ def main():
     info("#    Simon says: Thanks for using LUTR!    #")
 
     info("############################################")
+
 
 
 
