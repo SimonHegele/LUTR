@@ -247,6 +247,10 @@ At the same time LUTR inherits the problems of the methods used to create the in
 
 # 6. Comparison to predecessor UTRpy
 
+**LUTR uses hasmaps for parent-child relationships**<br>
+After loading GFF-files a map that reflects parent to child relationships is constructed.<br>
+This allows fast extraction of records.
+
 **LUTR improves parallelization:**<br>
 UTRpy: Splitting of annotations into chromosome slices<br>
 -> Number of usable CPU-cores limited by the number of chromosomes<br>
