@@ -187,11 +187,11 @@ assembled with [StringTie3](https://github.com/gpertea/stringtie) in conservativ
 
 ## 5.2 Computational ressources
 
-Test 1:
+Test 1:<br>
 required RAM:   ~4.8GB<br>
 required Time:  05m26s (64 threads, server) / 30m20s (8 threads, laptop)
 
-Test 2: 
+Test 2:<br>
 required RAM:   ~3.9GB<br>
 required Time:  04m35s (64 threads, server) / 21m54 (8 threads, laptop)
 
