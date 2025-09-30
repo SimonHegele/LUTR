@@ -78,7 +78,9 @@ def main():
 
         pool.map(process, zip([gff[s] for s in seqs], seqs))
         
-    run(f"cat coding/* > {args.GFF_out}")
+    run(f"cat coding/* > {args.GFF_out}",
+        shell=True,
+        check=True)
 
 if __name__ == "__main__":
     main()
