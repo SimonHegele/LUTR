@@ -13,7 +13,6 @@ from itertools       import chain
 from pandas          import DataFrame, Series, read_csv
 from typing          import Callable, Generator, Iterable, Hashable
 
-
 gff_columns = ["seqname",
                "source",
                "type",
@@ -45,7 +44,7 @@ class MultipleParentsError(Exception):
     def __init__(self,
                  gff:     DataFrame,
                  feature: Series,
-                 parents: list[Hashable]):
+                 parents: list):
         
         error_msg  = f"Multiple Parents:\n"
         error_msg += f"Feature:  {feature_string(feature)}"
@@ -97,51 +96,6 @@ def empty_gff() -> DataFrame:
     """
     return DataFrame({}, columns = gff_columns)
 
-def get_map_id2index(gff: DataFrame) -> defaultdict[str, list[Hashable]]:
-    
-    map_id2index = defaultdict(list)
-        
-    for i, feature in gff.iterrows():
-        
-        map_id2index[feature["ID"]].append(i)
-        
-    return map_id2index
-
-def get_map_parent2children(gff: DataFrame,
-                            map_id2index: defaultdict[str, list[Hashable]]) -> defaultdict[Hashable, list[Hashable]]:
-    
-    map_parent2children = defaultdict(list)
-    
-    for i, feature in gff.iterrows():
-        
-        if feature["Parent"] is None:
-            continue
-        
-        parents = map_id2index[feature["Parent"]]
-        
-        if len(parents) > 1:
-            raise MultipleParentsError(gff, feature, parents)
-        if len(parents) == 1:
-            map_parent2children[parents[0]].append(i)
-            
-    return map_parent2children
-            
-def get_subtree(gff:                 DataFrame,
-                index:               Hashable,
-                map_parent2children: defaultdict[Hashable, list[Hashable]]) -> list:
-    
-    children = map_parent2children[index]
-    
-    if children == 0:
-        return []
-    
-    return [index] + list(chain.from_iterable([get_subtree(gff, child, map_parent2children)
-                                               for child in children]))
-                  
-def get_trans(gff: DataFrame):
-    
-    return gff.loc[(gff["type"]=="transcript") | (gff["type"].str.contains("RNA"))]
-
 def feature_length(feature: Series) -> int:
     
     return int(feature["end"] - feature["start"])
@@ -189,6 +143,51 @@ def feature_pairs(gff_1: DataFrame,
             
 def feature_string(feature: Series) -> str:
     return "\t".join([str(c) for c in list(feature)])
+
+def get_map_id2index(gff: DataFrame) -> defaultdict[str, list]:
+    
+    map_id2index = defaultdict(list)
+        
+    for i, feature in gff.iterrows():
+        
+        map_id2index[feature["ID"]].append(i)
+        
+    return map_id2index
+
+def get_map_parent2children(gff: DataFrame) -> defaultdict:
+    
+    map_id2index        = get_map_id2index(gff)
+    map_parent2children = defaultdict(list)
+    
+    for i, feature in gff.iterrows():
+        
+        if feature["Parent"] is None:
+            continue
+        
+        parents = map_id2index[feature["Parent"]]
+        
+        if len(parents) > 1:
+            raise MultipleParentsError(gff, feature, parents)
+        if len(parents) == 1:
+            map_parent2children[parents[0]].append(i)
+            
+    return map_parent2children
+            
+def get_subtree(gff:                 DataFrame,
+                index:               Hashable,
+                map_parent2children: defaultdict[Hashable, list]) -> list:
+    
+    children = map_parent2children[index]
+    
+    if children == 0:
+        return [index]
+    else:
+        return [index] + list(chain.from_iterable([get_subtree(gff, child, map_parent2children)
+                                               for child in children]))
+
+def get_trans(gff: DataFrame):
+    
+    return gff.loc[(gff["type"]=="transcript") | (gff["type"].str.contains("RNA"))]
     
 def load_gff(file_path: str) -> DataFrame:
     """
@@ -284,11 +283,13 @@ def to_string(feature: Series):
 def type_split(gff: DataFrame, type: str) -> Generator[DataFrame, None, None]:
     
     features = gff.loc[gff["type"].str.contains(type, regex=False)]
-    map_p2ch = get_map_parent2children(gff, get_map_id2index(gff))
+    map_p2ch = get_map_parent2children(gff)
     
     for i, feature in features.iterrows():
+        
+        subtree = get_subtree(gff, i, map_p2ch)
 
-        yield gff.iloc[get_subtree(gff, i, map_p2ch)]
+        yield gff.iloc[subtree]
 
 def write_gff(gff: DataFrame, file_path: str, mode='w'):
 

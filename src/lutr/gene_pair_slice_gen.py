@@ -10,46 +10,45 @@ Description:    Generation of GFF-slices for pairs of predicted and assembled ge
 
 from multiprocessing import Pool
 from os              import path
-from pandas          import concat, DataFrame
+from pandas          import DataFrame
 
 from .gffutils       import *
 from .gene_pair_gen  import gene_pairs
 
-def gene_pair_slices(gff_prediction: DataFrame,
-                     gff_assembly:   DataFrame,
-                     tmpdir:         str):
+def gene_pair_slices(predicted_gff: DataFrame,
+                     assembled_gff: DataFrame,
+                     tmpdir:        str):
     
-    out_prediction = path.join(tmpdir, "genes_predicted")
-    out_assembly   = path.join(tmpdir, "genes_assembled")
-    
-    map_i2i_prediction  = get_map_id2index(gff_prediction)
-    map_i2i_assembly    = get_map_id2index(gff_assembly)
-    map_p2ch_prediction = get_map_parent2children(gff_prediction, map_i2i_prediction)
-    map_p2ch_assembly   = get_map_parent2children(gff_assembly,   map_i2i_assembly)
-    
-    for predicted_gene, matches in gene_pairs(gff_prediction, gff_assembly):
+    predicted_outdir   = path.join(tmpdir, "genes_predicted")
+    assembled_outdir   = path.join(tmpdir, "genes_assembled")
+    predicted_children = get_map_parent2children(predicted_gff)
+    assembled_children = get_map_parent2children(assembled_gff)
+
+    for predicted_gene, assembled_genes in gene_pairs(predicted_gff, assembled_gff):
         
-        gene_id               = predicted_gene["ID"]
-        gene_slice_prediction = gff_prediction.iloc[get_subtree(gff_prediction,
-                                                                predicted_gene.name,
-                                                                map_p2ch_prediction)]
+        predicted_outfile = path.join(predicted_outdir, "gp_"+ predicted_gene["ID"] +".gff")
+        assembled_outfile = path.join(assembled_outdir, "ga_"+ predicted_gene["ID"] +".gff")
         
-        if len(matches) > 0:
-            gene_slice_assembly = concat([gff_assembly.iloc[get_subtree(gff_assembly,
-                                                                        i,
-                                                                        map_p2ch_assembly)]
-                                            for i, _ in matches.iterrows()])
-        else:
-            gene_slice_assembly = empty_gff()
+        write_gff(predicted_gff.iloc[get_subtree(predicted_gff,
+                                                  predicted_gene.name,
+                                                  predicted_children)],
+                  predicted_outfile)
         
-        write_gff(gene_slice_prediction, path.join(out_prediction, f"gp_{gene_id}.gff"))
-        write_gff(gene_slice_assembly,   path.join(out_assembly, f"ga_{gene_id}.gff"))
+        open(assembled_outfile, "w").close()
+        
+        for _, assembled_gene in assembled_genes.iterrows():
             
-def generate_gene_pair_slices_wrapper(args: tuple[DataFrame,DataFrame,str,int]):
+            write_gff(assembled_gff.iloc[get_subtree(assembled_gff,
+                                                     assembled_gene.name,
+                                                     assembled_children)],
+                  assembled_outfile,
+                  mode="a")
+            
+def generate_gene_pair_slices_wrapper(args: tuple[DataFrame,DataFrame,str]):
     
-    gff_prediction, gff_assembly, tmpdir = args
+    predicted_gff, assembled_gff, tmpdir = args
     
-    gene_pair_slices(gff_prediction,gff_assembly,tmpdir)
+    gene_pair_slices(predicted_gff,assembled_gff,tmpdir)
         
 def gene_pair_slices_multiprocessed(prediction: dict[str, DataFrame],
                            assembly:   dict[str, DataFrame],

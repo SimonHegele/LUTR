@@ -14,11 +14,11 @@ from pandas          import DataFrame, Series
 
 from .gffutils import overlapping_features, feature_length
 
-def gene_pairs(gff_prediction: DataFrame,
-               gff_assembly:   DataFrame) -> Generator[tuple[Series, DataFrame], None, None]:
+def gene_pairs(predicted_gff: DataFrame,
+               assembled_gff:   DataFrame) -> Generator[tuple[Series, DataFrame], None, None]:
     
-    predicted_genes = gff_prediction.loc[gff_prediction["type"]=="gene"]
-    assembled_genes = gff_assembly.loc[gff_assembly["type"]=="gene"]
+    predicted_genes = predicted_gff.loc[predicted_gff["type"]=="gene"]
+    assembled_genes = assembled_gff.loc[assembled_gff["type"]=="gene"]
 
     for _, predicted_gene in predicted_genes.iterrows():
 
@@ -26,20 +26,22 @@ def gene_pairs(gff_prediction: DataFrame,
         matches = overlapping_features(matches, predicted_gene)
 
         yield predicted_gene, matches
+        
+        assembled_genes.drop(matches.index)
 
 def gene_pairs_wrapper(args: tuple[DataFrame, DataFrame]) -> list[tuple[Series, DataFrame]]:
 
-    gff_prediction, gff_assembly = args
+    predicted_gff, assembled_gff = args
 
-    return list(gene_pairs(gff_prediction, gff_assembly))
+    return list(gene_pairs(predicted_gff, assembled_gff))
 
-def gene_pairs_multiprocessing(gff_prediction: dict[str, DataFrame],
-                               gff_assembly:   dict[str, DataFrame],
-                               seqnames:       list[str],
-                               threads:        int) -> list[tuple[Series,DataFrame]]:
+def gene_pairs_multiprocessing(predicted_gff: dict[str, DataFrame],
+                               assembled_gff: dict[str, DataFrame],
+                               seqnames:      list[str],
+                               threads:       int) -> list[tuple[Series,DataFrame]]:
     
-    args     = zip([gff_prediction[s] for s in seqnames],
-                   [gff_assembly[s] for s in seqnames])
+    args     = zip([predicted_gff[s] for s in seqnames],
+                   [assembled_gff[s] for s in seqnames])
     
     with Pool(min(len(seqnames), threads)) as pool:
 
