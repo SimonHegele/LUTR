@@ -47,10 +47,10 @@ class MultipleParentsError(Exception):
                  parents: list):
         
         error_msg  = f"Multiple Parents:\n"
-        error_msg += f"Feature:  {feature_string(feature)}"
+        error_msg += f"Feature:  {feature_string(feature)}\n"
         
         for i, parent_index in enumerate(parents):
-            error_msg += f"Parent i: {feature_string(gff.iloc[parent_index])}"
+            error_msg += f"Parent {i}: {feature_string(gff.iloc[parent_index])}\n"
             
         super().__init__(error_msg)
 
