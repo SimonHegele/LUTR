@@ -185,7 +185,7 @@ def get_subtree(gff:                 DataFrame,
         return [index] + list(chain.from_iterable([get_subtree(gff, child, map_parent2children)
                                                for child in children]))
 
-def get_trans(gff: DataFrame):
+def get_trans(gff: DataFrame) -> DataFrame:
     
     return gff.loc[(gff["type"]=="transcript") | (gff["type"].str.contains("RNA"))]
     
