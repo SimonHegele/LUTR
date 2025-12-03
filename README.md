@@ -195,7 +195,7 @@ required RAM:   ~3.9GB<br>
 required Time:  04m35s (64 threads, server) / 21m54 (8 threads, laptop)
 
 The required time required to process a gene is highly dependent on the number of isoforms annotated.<br>
-While most genes are processed within seconds, few genes may take several minutes to process.
+While most genes are processed within a fraction of a second, genes with many isoforms may take more than a minute to process.
 
 ## 5.3 Results
 
@@ -215,8 +215,8 @@ Test 2:
 
 | Annotation              | # genes | # mRNA | # mRNA, UTR | # mRNA, UTR (both sides) | Mean 5'-UTR length | Mean 5'-UTR length | 
 |-------------------------|--------:|-------:|------------:|-------------------------:|-------------------:|-------------------:|
-| Reference               | 22192   | 96192  | 94380       | 93379                    | 614                | 1625               |
 | Assembly                | 33902   | ?      | ?           | ?                        | ?                  | ?                  |
+| Reference (UTR clipped) | 22192   | 68114  | 0           | 0                        | 0                  | 0                  |
 | LUTR                    | 22192   | 94728  | 79557       | 79121                    | 9735               | 1828               |     
 
 ### 5.2.2 Structural analysis of isoforms
