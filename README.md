@@ -101,7 +101,7 @@ Others:
 ### 2.1 Input
 
 Input annotations are required to be in GFF3 format.
-agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) can be used to convert from GTF and GFF.
+agat_sp_convert_sp_gxf2gxf.pl from [AGAT](https://github.com/NBISweden/AGAT) can be used to convert from GTF to GFF.
 
 To generate an assembly annotation matching your predicted one you can use the assembly
 pipeline described in section 3.
