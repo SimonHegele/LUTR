@@ -138,8 +138,9 @@ Assembly pipeline
 - Long read mapping with Minimap2 (or input of mapped reads)
 - Assembly with StringTie
 
-**noUTR**
-Generating UTR-clipped annotations of coding genes Caution: Does not create exons, use agat_convert_gxf2gxf.pl!
+**noUTR**<br>
+Generating UTR-clipped annotations of coding genes<br>
+Caution: Duplicates from isoforms using identical CDS but different UTR are not removed. This can be done with agat_convert_gxf2gxf.pl!
 
 ## 4 LUTR workflow
 
