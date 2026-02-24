@@ -255,7 +255,7 @@ This allows fast extraction of records.
 UTRpy: Splitting of annotations into chromosome slices<br>
 -> Number of usable CPU-cores limited by the number of chromosomes<br>
 -> Workload is not distributed evenly among processes<br>
-LUTR: Splitting of annotations into chromosome slices and into gene slices second<br>
+LUTR: Splitting of annotations into chromosome slices first and into gene slices second<br>
 -> Number of usable CPU-cores practically unlimited<br>
 -> Even distribution of workload among processes
 
