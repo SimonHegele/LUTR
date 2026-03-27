@@ -43,9 +43,8 @@ class LUTRArgparser(ArgumentParser):
                     
                     Additional parameter explanation:
                     *1 By default, LUTR only allows transcript matches in which all other exons between the first and
-                       last matched exon must also be matched exactly. This is based on the assumption that UTRs can
-                       affect splicing within the coding regions of a transcript, e.g. by changing its secondary
-                       structure.
+                       last matched exon must also be matched exactly. (Assumption that splicing events in UTRs may
+                       affect splicing within the coding regions and vice versa)
                     *2 By default, LUTR assignes assembled transcripts only to the matching predicted transcripts they
                        share the most bases with. Assigning them to all matching predicted transcripts can increase the
                        number of annotated UTRs but bears the risk of an increased rate of false positives.
@@ -64,7 +63,7 @@ class LUTRArgparser(ArgumentParser):
         self.add_argument("assembly",
                           help="Annotation from transcriptome assembly (GFF)")
         self.add_argument("outdir",
-                          help="Output directory (Must not exist already)")
+                          help="Output directory")
         
         grp1 = self.add_argument_group(title="Transcript matching")
         grp1.add_argument("-mf","--mftm",
