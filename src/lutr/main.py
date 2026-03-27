@@ -26,9 +26,9 @@ def delete_all_files(folder):
 def load_data(path_prediction: str, path_assembly: str) -> tuple[DataFrame, DataFrame]:
     
     info("Loading GFF-file (Prediction) ...")
-    prediction = log_wrapper(load_gff, path_prediction)
+    prediction = load_gff(path_prediction)
     info("Loading GFF-file (Assembly) ...")
-    assembly   = log_wrapper(load_gff, path_assembly)
+    assembly   = load_gff(path_assembly)
     
     return prediction, assembly
 
